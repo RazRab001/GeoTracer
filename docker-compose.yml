@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgis/postgis:15-3.4  # PostgreSQL 15 с PostGIS 3.4
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user         # Имя пользователя базы данных
+      POSTGRES_PASSWORD: password # Пароль пользователя
+      POSTGRES_DB: mydb           # Название базы данных
+    ports:
+      - "5432:5432"               # Порт для подключения к базе данных
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Персистентное хранилище данных
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Скрипт для инициализации PostGIS
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:  # Объем для хранения данных PostgreSQL
+
+networks:
+  app_network:
+    driver: bridge

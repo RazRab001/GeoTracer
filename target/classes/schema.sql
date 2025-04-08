@@ -1,0 +1,1 @@
+CREATE INDEX IF NOT EXISTS idx_coordinates_location ON coordinates USING GIST (geom);
